@@ -32,18 +32,23 @@ class MyVector {
     }
 
     //copy assignment operator
+    //overload the = via the operator= to teach the compiler how to deal with a situation like vec2 = vec1
+    //return type of reference to MyVector (MyVector&) so that we can chain assignments vec4 = vec3 = vec4
+    //const ensures no change made to the vector we are copying from
+    //MyVector& is the input, taken by reference for speed so we dont need to make a clone of vec1 during copying
+    //other is the variable name chosen for the incoming vector
     MyVector& operator=(const MyVector& other) {
         std::cout << "-> Copy Assignment Called (Deep Copy)\n";
         
-        // Guard against self-assignment (e.g., vec1 = vec1)
+        //guard against self-assignment (e.g., vec1 = vec1)
         if (this == &other) {
             return *this;
         }
 
-        // Free the existing memory of the target object
+        //free the existing memory of the target object
         delete[] data;
 
-        // Perform the deep copy
+        //perform the deep copy
         size = other.size;
         capacity = other.capacity;
         data = new int[capacity];
@@ -53,7 +58,7 @@ class MyVector {
     }
 
     // --- 4. Move Semantics: Pointer Stealing (Rules 4 & 5) ---
-    // Move Constructor
+    //move Constructor
     MyVector(MyVector&& other) noexcept 
         : data(other.data), size(other.size), capacity(other.capacity) {
         
@@ -65,11 +70,11 @@ class MyVector {
         other.capacity = 0;
     }
 
-    // Move Assignment Operator
+    //move Assignment Operator
     MyVector& operator=(MyVector&& other) noexcept {
         std::cout << "-> Move Assignment Called (Pointer Stolen)\n";
         
-        // Guard against self-assignment
+        //guard against self-assignment
         if (this == &other) {
             return *this;
         }
