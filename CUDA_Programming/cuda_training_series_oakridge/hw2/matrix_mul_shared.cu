@@ -23,16 +23,23 @@ const float A_val = 3.0f;
 const float B_val = 2.0f;
 
 // matrix multiply (naive) kernel: C = A * B
+//__global__ is the CUDA keyword for a kernel function
 __global__ void mmul(const float *A, const float *B, float *C, int ds) {
 
   // declare cache in shared memory
+  //__shared__ allocates memory physically in the SM (streaming multiprocessor) where the thread block is running
+  //  right now, As and Bs are 32x32 temporary cells
   __shared__ float As[block_size][block_size];
   __shared__ float Bs[block_size][block_size];
 
+  //determine each thread's id across the entire matrix:
+  //  blockIdx is the block we are in, blockDim is the size (32), and threadIdx is the local seat in that block
+  //  Analogy: to find a student's absolute seat number: (classroom numer * 32 seats per classroom) + student's seat in classroom
   int idx = threadIdx.x+blockDim.x*blockIdx.x; // create thread x index
   int idy = threadIdx.y+blockDim.y*blockIdx.y; // create thread y index
 
   if ((idx < ds) && (idy < ds)){
+    //note that temp does not use __shared__, meaning that it is allocated in the thread's register (fastest memory possible)
     float temp = 0;
     for (int i = 0; i < ds/block_size; i++) {
 
