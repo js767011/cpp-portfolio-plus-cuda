@@ -48,7 +48,7 @@ int main(){
   cudaCheckErrors("kernel launch failure");
   //cuda processing sequence step 2 is complete
   // copy vector C from device to host:
-  cudaMemcpy(h_C, d_C, DSIZE*sizeof(float), cudaMemcpyHostToDevice);
+  cudaMemcpy(h_C, d_C, DSIZE*sizeof(float), cudaMemcpyDeviceToHost);
   //cuda processing sequence step 3 is complete
   cudaCheckErrors("kernel execution failure or cudaMemcpy H2D failure");
   printf("A[0] = %f\n", h_A[0]);
