@@ -11,7 +11,10 @@
 #include <unordered_map>
 #include <string>
 
-/* Brute Force Solution */
+/* Brute Force Solution 
+  Time: O(2 ^ n+m)
+  Space: O(n + m)
+*/
 // int gridTraveler(int m, int n) {
 //   if (m == 1 && n == 1) return 1;
 //   if (m == 0 || n == 0) return 0;
@@ -20,6 +23,8 @@
 
 /* Memoize Solution */
 /* now lets implement a memoized solution that stores the results of previous calculations:
+  Time: O(m*n)
+  Space: O(n+m)
 */
 typedef unsigned long long ull;
 

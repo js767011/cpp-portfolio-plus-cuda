@@ -11,7 +11,9 @@
 /*
   now lets implement a memoized fibonacci calcuation:
     this one will store previous values to make the lookup tree
-    much smaller
+    much smaller.
+    Time: O(n)
+    Space: O(n)
 */
 typedef unsigned long long ull;
 
